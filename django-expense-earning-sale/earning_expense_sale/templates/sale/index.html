@@ -1,0 +1,146 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content%}
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Delete Entry</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body confirm-delete">
+          <h4>Are you sure, you want to delete?</h4>
+          <h6>This can not be reversed</h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmDeleteButtonModal" >Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Sales</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <a href="">My Sales</a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-md-3 col-lg-2">
+      <a href="{% url 'add-sale' %}" class="btn btn-primary">Add sales</a>
+    </div>
+  </div>
+
+  {% include 'partials/_messages.html' %} 
+  <div class="container">
+ 
+    {% if sales.count %}
+    <div class="row">
+      
+      <div class="col-md-1"></div>
+      <div class="col-md-11">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <input type="text" class="form-control" id="searchField" placeholder="Search">
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="startDateField">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="endDateField">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <input type="submit" class="btn btn-primary" value="dateSubmit" id="dateSubmit" />
+              </div>
+              <div class="col-md-2">
+                <a class="btn btn-primary" href="{% url 'sales'%}" value="Reset">Reset</a>
+              </div>
+            </div> 
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div class="app-table">
+      <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>BILL NO.</th>
+                <th>AMOUNT (in Rs)</th>
+                <th>Date</th>
+                <th>AREA</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{sale.name}}</td>
+                <td>{{sale.bill_no}}</td>
+                <td>{{sale.amount}}</td>
+                <td>{{sale.date}}</td>
+                <td>{{sale.area}}</td>
+                <td class="ml-5">
+                    <a href="{% url 'edit-sale' sale.id%}" class="btn btn-primary btn-sm px-3">Edit</a>
+                    <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="{% url 'delete-sale' sale.id %}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal{{sale.id}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-output">
+      <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>BILL NO.</th>
+                <th>AMOUNT (in Rs)</th>
+                <th>Date</th>
+                <th>AREA</th>
+            </tr>
+        </thead>
+
+        <tbody class="table-body">
+        </tbody>
+      </table>
+    </div>
+
+      {% endif %}
+  </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script>    
+    $(document).on('click', '.confirm-delete', function () {
+    $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+    });
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+  var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+  window.location = $("#".concat(caller)).attr("href");
+});
+</script>
+<script src="{% static 'js/searchSales.js'%}"></script>
+
+
+{% endblock content %}

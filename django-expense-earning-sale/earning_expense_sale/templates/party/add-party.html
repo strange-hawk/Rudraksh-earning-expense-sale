@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" aria-current="page">
+        <a href="{% url 'party' %}" class="breadcrumb-item">Party</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Party</li>
+    </ol>
+  </nav>
+
+  
+  <div class="card">
+    <div class="card-body">
+      <form action="#" method="post">
+        {% include 'partials/_messages.html'%}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" name="name" class="form-control form-control-sm" value="{{values.name}}"/>
+          </div>
+        <div class="form-group">
+          <label for="Amount">Area</label>
+          <input type="text" name="area" class="form-control form-control-sm" value="{{values.area}}"/>
+        </div>
+        <div class="form-group">
+          <label for="Reference">Reference</label>
+          <input type="text" name="reference" class=" form-control form-control-sm" value="{{values.reference}}"/>
+        </div>
+        <div class="form-group">
+            <label for="Contact">Contact</label>
+            <input type="text" name="contact" class=" form-control form-control-sm" value="{{values.contact}}"/>
+          </div>
+        <input type="submit" value="Add" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content%}

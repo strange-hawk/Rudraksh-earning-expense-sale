@@ -1,0 +1,122 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content%}
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Delete Entry</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body confirm-delete">
+          <h4>Are you sure, you want to delete?</h4>
+          <h6>This can not be reversed</h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmDeleteButtonModal" >Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-9 col-lg-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Parties</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <a href="">My party</a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-md-3 col-lg-2">
+      <a href="{% url 'add-party' %}" class="btn btn-primary">Add party</a>
+    </div>
+  </div>
+
+  {% include 'partials/_messages.html' %} 
+  <div class="container">
+
+    {% if parties.count %}
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" class="form-control" id="searchField" placeholder="Search">
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-table">
+      <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Area</th>
+                <th>Reference</th>
+                <th>Contact</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for party in parties %}
+            <tr>
+                <td>{{party.name}}</td>
+                <td>{{party.area}}</td>
+                <td>{{party.reference}}</td>
+                <td>{{party.contact}}</td>
+                <td>
+                    <a href="{% url 'edit-party' party.id %}" class="btn btn-primary btn-sm px-3">Edit</a>
+                    <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="{% url 'delete-party' party.id %}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal{{party.id}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+      <div class="table-output">
+        <table class="table table-stripped table-hover">
+          <thead>
+              <tr>
+                  <th>NAME</th>
+                  <th>Area</th>
+                  <th>Reference</th>
+                  <th>Contact</th>
+              </tr>
+          </thead>
+  
+          <tbody class="table-body">
+          </tbody>
+        </table>
+      </div>
+
+
+
+      {% endif %}
+  </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script>    
+    $(document).on('click', '.confirm-delete', function () {
+    $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+    });
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+  var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+  window.location = $("#".concat(caller)).attr("href");
+});
+</script>
+<script src="{% static 'js/searchParties.js'%}"></script>
+
+{% endblock content %}
