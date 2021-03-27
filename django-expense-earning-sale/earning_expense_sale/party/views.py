@@ -118,7 +118,8 @@ def export_pdf(request):
     expense = Expense.objects.filter(date__month=today.month) & Expense.objects.filter(date__day=today.day) & Expense.objects.filter(date__year=today.year)
     earning = Earning.objects.filter(date__month=today.month) & Earning.objects.filter(date__day=today.day) & Earning.objects.filter(date__year=today.year)
     sale = Sale.objects.filter(date__month=today.month) & Sale.objects.filter(date__day=today.day) & Sale.objects.filter(date__year=today.year)
-    html_string = render_to_string('party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2), 'day':today.day, 'month': today.month, 'year' : today.year})
+    today_date = 'Report       ' + str(today.day) + '-' + str(today.month) + '-' + str(today.year)
+    html_string = render_to_string('party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2), 'day':today.day, 'month': today.month, 'year' : today.year, 'today_date':today_date})
     
     html = HTML(string=html_string)
     result = html.write_pdf()
@@ -127,7 +128,11 @@ def export_pdf(request):
         output.flush()
         output = open(output.name, 'rb')
         response.write(output.read())
-        
+    # today_date = today.day + '-' + today.month+1 + '-' + today.year
     return response
     # print(earning.aggregate(Sum('amount'))['amount__sum'])
-    # return render(request, 'party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2)})
+    return render(request, 'party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2), 'today_date':today_date})
+
+
+# 'party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2), 'today_date':today_date})
+# 'party/pdf-output.html', {'expenses':expense, 'totalexpense' : round(expense.aggregate(Sum('amount'))['amount__sum'],2), 'earnings':earning, 'totalearning' : round(earning.aggregate(Sum('amount'))['amount__sum'],2), 'sales':sale, 'totalsale' : round(sale.aggregate(Sum('amount'))['amount__sum'],2), 'day':today.day, 'month': today.month, 'year' : today.year, 'today_date':today_date})

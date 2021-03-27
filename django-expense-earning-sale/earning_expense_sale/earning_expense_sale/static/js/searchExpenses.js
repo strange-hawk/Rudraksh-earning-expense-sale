@@ -8,7 +8,7 @@ const startDateField = document.querySelector('#startDateField')
 const endDateField = document.querySelector('#endDateField')
 
 tableOutput.style.display = 'none'
-
+ 
 searchField.addEventListener('keyup', (e)=>{
     const searchValue = e.target.value
     if(searchValue.trim().length > 0){
@@ -35,6 +35,10 @@ searchField.addEventListener('keyup', (e)=>{
                     <td>${item.purpose}</td>
                     <td>${item.date}</td>
                     <td>${item.area}</td>
+                    <td>
+                    <a href="/expense/edit-expense/${item.id}" class="btn btn-primary btn-sm px-3">Edit</a>
+                    <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="/expense/delete-expense/${item.id}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal${item.id}">Delete</a>
+                </td>
                     </tr>`
                 })
             }
@@ -75,6 +79,10 @@ dateButton.addEventListener('click', (e)=>{
                     <td>${item.purpose}</td>
                     <td>${item.date}</td>
                     <td>${item.area}</td>
+                    <td>
+                    <a href="/expense/edit-expense/${item.id}" class="btn btn-primary btn-sm px-3">Edit</a>
+                    <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="/expense/delete-expense/${item.id}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal${item.id}">Delete</a>
+                </td>
                     </tr>`
                 })
             }

@@ -1,145 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PDF output</title>
     <style>
-        body{
-            text-align:center;
-        }
-        *{
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        td{
-            font-size: 15px;
-        }
-        @page{
-            size: "A4";
-            margin: 1.5cm 1cm 1.5cm 1cm;
-            border: 2px solid black;
+      body {
+        text-align: center;
+      }
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      td {
+        font-size: 13px;
+      }
+      @page {
+        size: "A4";
+        margin: 1.5cm 1cm 1.5cm 1cm;
+        border: 2px solid black;
 
-
-            @top-center{
-                content: "REPORT {{date}}"
-            }
-        }
-        .entity{
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
+        @top-center {
+          content: '{{today_date}}';
+        } 
+      }
+      .entity {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      thead{
+          background: #cece9d;
+      }
+      tbody{
+          background: #f7f7e7;
+      }
+      .wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      h3{
+        display: inline-block;
+        background: #2e80ba;
+        padding: 10px 28px;
+        color: white;
+        font-weight: 100;
+        border-radius: 26px;
+      }
+      hr{
+          color: transparent;
+      }
     </style>
-</head>
-<body>
-    <div class="entity">
-        <h3><bold>Expense List</bold></h3>
-        <table class="table table-stripped table-hover"   style="  width: 100%;
-        margin: auto;">
-            <thead>
-                <tr>
-                    <th>Serial no.</th>
-                    <th>Name</th>
-                    <th>AMOUNT</th>
-                    <th>PURPOSE</th>
-                </tr>
-            </thead>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="entity">
+        <h3><bold>Expense Summary</bold></h3>
+        <table
+          class="table table-stripped table-hover"
+          style="width: 100%; margin: auto"
+        >
+          <thead>
+            <tr>
+              <th>Serial no.</th>
+              <th>Name</th>
+              <th>AMOUNT</th>
+              <th>PURPOSE</th>
+            </tr>
+          </thead>
 
-            <tbody>
-                {% for expense in expenses %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td style="text-align: left;">{{expense.name}} , {{expense.area}}</td>
-                    <td>{{expense.amount}}</td>
-                    <td>{{expense.purpose}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+          <tbody>
+            {% for expense in expenses %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td style="text-align: left;padding-left: 20px; padding-right: -26px; width: 60%;">
+                {{expense.name}} , {{expense.area}}
+              </td>
+              <td>{{expense.amount}}</td>
+              <td>{{expense.purpose}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
-    </div>
-    <hr>
-    <hr>
-    <div class="entity">
-        <h3><bold>Earning List</bold></h3>
-        <table class="table table-stripped table-hover"   style="  width: 100%;
-        margin: auto;">
-            <thead>
-                <tr>
-                    <th>Serial No.</th>
-                    <th>Name</th>
-                    <th>MODE</th>
-                    <th>AMOUNT</th>
-                    
-                    
-                </tr>
-            </thead>
+      </div>
+      <hr />
+      <!-- <hr /> -->
+      <div class="entity">
+        <h3><bold>Earning Summary</bold></h3>
+        <table
+          class="table table-stripped table-hover"
+          style="width: 100%; margin: auto"
+        >
+          <thead>
+            <tr>
+              <th>Serial No.</th>
+              <th>Name</th>
+              <th>MODE</th>
+              <th>AMOUNT</th>
+            </tr>
+          </thead>
 
-            <tbody>
-                {% for earning in earnings%}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td style="text-align: left;">{{earning.name}} , {{earning.area}}</td>
-                    <td>{{earning.mode}}</td>
-                    <td>{{earning.amount}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+          <tbody>
+            {% for earning in earnings%}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td style="text-align: left;padding-left: 20px; padding-right: -26px; width: 60%;">
+                {{earning.name}} , {{earning.area}}
+              </td>
+              <td>{{earning.mode}}</td>
+              <td>{{earning.amount}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
-    </div>
-    <hr>
-    <hr>
-    <div class="entity">
-        <h3><bold>Sales List</bold></h3>
-        <table class="table table-stripped table-hover"   style="  width: 100%;
-        margin: auto;">
-            <thead>
-                <tr>
-                    <th>Serial No.</th>
-                    <th>Name</th>
-                    <th>BILL No.</th>
-                    <th>AMOUNT</th>
-                    
-                    
-                </tr>
-            </thead>
+      </div>
+      <hr />
+      <!-- <hr /> -->
+      <div class="entity">
+        <h3><bold>Sale Summary</bold></h3>
+        <table
+          class="table table-stripped table-hover"
+          style="width: 100%; margin: auto"
+        >
+          <thead>
+            <tr>
+              <th>Serial No.</th>
+              <th>Name</th>
+              <th>BILL No.</th>
+              <th>AMOUNT</th>
+            </tr>
+          </thead>
 
-            <tbody>
-                {% for sale in sales%}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td style="text-align: left;">{{sale.name}} , {{sale.area}}</td>
-                    <td>{{sale.bill_no}}</td>
-                    <td>{{sale.amount}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+          <tbody>
+            {% for sale in sales%}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td style="text-align: left;padding-left: 20px; padding-right: -26px; width: 60%;">{{sale.name}} , {{sale.area}}</td>
+              <td>{{sale.bill_no}}</td>
+              <td>{{sale.amount}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
-    </div>
-    <hr>
-    <hr>
-    <div class="entity">
+      </div>
+      <hr />
+      <!-- <hr /> -->
+      <div class="entity">
         <h3><bold>Total</bold></h3>
-        <table class="table table-stripped table-hover"   style="  width: 100%;
-        margin: auto;">
-            <thead>
-                <tr>
-                    <th>Earning</th>
-                    <th>Sale</th>
-                    <th>Expense</th>
-                </tr>
-            </thead>
+        <table
+          class="table table-stripped table-hover"
+          style="width: 100%; margin: auto"
+        >
+          <thead>
+            <tr>
+              <th>Earning</th>
+              <th>Sale</th>
+              <th>Expense</th>
+            </tr>
+          </thead>
 
-            <tbody>
-                <tr>
-                    <td>{{totalearning}}</td>
-                    <td>{{totalsale}}</td>
-                    <td>{{totalexpense}}</td>
-                </tr>
-            </tbody>
+          <tbody>
+            <tr>
+              <td>{{totalearning}}</td>
+              <td>{{totalsale}}</td>
+              <td>{{totalexpense}}</td>
+            </tr>
+          </tbody>
         </table>
+      </div>
+      <!-- <hr />
+      <hr /> -->
     </div>
-    <hr>
-    <hr>
-</body>
+  </body>
 </html>

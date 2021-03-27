@@ -34,6 +34,10 @@ searchField.addEventListener('keyup', (e)=>{
                     <td>${item.amount}</td>
                     <td>${item.date}</td>
                     <td>${item.area}</td>
+                    <td>
+                        <a href="/sale/edit-party/${item.id}" class="btn btn-primary btn-sm px-3">Edit</a>
+                        <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="/sale/delete-party/${item.id}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal${item.id}">Delete</a>
+                    </td>
                     </tr>`
                 })
             }
@@ -74,6 +78,10 @@ dateButton.addEventListener('click', (e)=>{
                     <td>${item.amount}</td>
                     <td>${item.date}</td>
                     <td>${item.area}</td>
+                    <td>
+                        <a href="/sale/edit-party/${item.id}" class="btn btn-primary btn-sm px-3">Edit</a>
+                        <a class="btn btn-lg btn-danger btn-sm delete_modal confirm-delete" href="/sale/delete-party/${item.id}" data-toggle="modal" data-target="#confirmDeleteModal" id="confirmDeleteModal${item.id}">Delete</a>
+                    </td>
                     </tr>`
                 })
             }
